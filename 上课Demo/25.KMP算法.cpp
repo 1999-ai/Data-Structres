@@ -1,4 +1,4 @@
-/* Õı³£ÈËÊµÏÖ°æ 
+/* æ­£å¸¸å®ç°
 #include<stdio.h>
 #include<string.h>
 typedef char* Position;
@@ -36,7 +36,7 @@ int main(){
 
 
 */
-// KMP Ëã·¨ 
+// KMP ç®—æ³•
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -49,12 +49,12 @@ void BuildMatch(char *pattern,int *match){
 	int m = strlen(pattern);
 	match[0] = -1;
 	for(j=1;j<m;j++){
-		i = match[j-1];   // Ç°Ò»¸ö×Ö·ûµÄ match 
-		while((i>=0) && (pattern[i+1] != pattern[j]))  // Èç¹û²»µÈ£¬»ØÍË 
+		i = match[j-1];   // å‰ä¸€ä¸ªå­—ç¬¦çš„match 
+		while((i>=0) && (pattern[i+1] != pattern[j]))  // å¦‚æœä¸ç›¸ç­‰åˆ™å›é€€
 			i = match[i];
-		if(pattern[i+1] == pattern[j])  // µ½Ä³²½ÖÕÓÚµÈÁË 
+		if(pattern[i+1] == pattern[j])  // untilç›¸ç­‰çš„è¿™ä¸€æ­¥
 			match[j] = i+1;  // match+1 
-		else  // ·ñÔòÇ°ÃæÃ»ÓĞÏàµÈµÄ 
+		else  // // å‰é¢æ²¡æœ‰ç›¸ç­‰çš„
 			match[j] = -1; 
 	}
 }
@@ -66,15 +66,15 @@ Position KMP(char* string,char *pattern){
 	if(n < m)
 		return NotFound;
 	int *match = (int *)malloc(sizeof(int) * m);
-	BuildMatch(pattern,match);   // ¹¹½¨ match º¯Êı 
+	BuildMatch(pattern,match);   // generate mathc function
 	s = p = 0;
 	while(s < n && p < m){
-		if(string[s] == pattern[p]){ // µ±ÏàµÈÊ±£¬±È½ÏÏÂÒ»¸ö 
+		if(string[s] == pattern[p]){ // ç›¸ç­‰æ—¶æ¯”è¾ƒä¸‹ä¸€ä¸ª 
 			s++;
 			p++;
-		}else if(p>0)  // µ±²»µÈÁË£¬pattern »ØÍËµ½ match[p-1] + 1 µÄÎ»ÖÃ  
+		}else if(p>0)  // å½“ä¸ç­‰ï¼Œpatternå›é€€åˆ° match[p-1] + 1 çš„ä½ç½®
 			p = match[p-1]+1;
-		else   // µ± p = 0 Ê±¿Ï¶¨Ã»ÍËµÄ 
+		else   // å³P=0
 			s++;
 	}
 	return (p == m) ? (s-m) : NotFound;
@@ -92,14 +92,3 @@ int main(){
 		printf("%s",string+p);
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-

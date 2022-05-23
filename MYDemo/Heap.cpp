@@ -32,8 +32,8 @@ MaxHeap Create(int MaxSize){
 
 // insert a new element into the heap
 bool Insert(MaxHeap heap, ElementType item){
-    if (IsFull){
-        printf("Heap is full, cannot insert!\n");7
+    if (IsFull(heap)){
+        printf("Heap is full, cannot insert!\n");
         return false;
     }
     int i = ++heap-> Size; // i points to the last position insert into the heap
@@ -43,24 +43,28 @@ bool Insert(MaxHeap heap, ElementType item){
         // let the child element has the parent element's value
     }
     heap-> Elements[i] = item; // give the insert value to parent element
+    //printf("i = %d, There size is %d",i, heap->Size);
+    //LevelOrderTraversal(heap);
     return true; // insert successed
 }
 
-ElementType Remove(MaxHeap heap, ElementType){
+ElementType Remove(MaxHeap heap){
     int parent, child;
     ElementType maxItem, temp;
     if (IsEmpty(heap)){
         printf("Heap is empty");
-        return;
+        return ERROR;
     }
     maxItem = heap-> Elements[1]; // delete the root, save it in maxItem
-    temp = heap-> Elements[heap-> Size--]; // get the last element
+    temp = heap-> Elements[heap-> Size--]; // get and delete the last element
+    
     // condition: parent has left child element? parent * 2 is the position of the left child
     // this for loop is finding the right position for temp
     // finding from the root element    
     for (parent = 1; parent * 2 <= heap->Size; parent = child){
+        printf("In Function travers");LevelOrderTraversal(heap);
         // child index points to the left child
-        child = parent * 2;
+        child = parent * 2;//即使temp是右侧最小值，也可以给左侧赋值
         // child is not the last element which means there is a right child element
         if ((child != heap->Size) && 
             // find the greater child element
@@ -92,14 +96,28 @@ bool IsEmpty(MaxHeap heap){
 
 void LevelOrderTraversal(MaxHeap heap){
     printf("LevelOrderTraversal Resulting: ");
-    for (int i = 1; i < heap->Size; i++){
-        printf("%D", heap->Elements[i]);
+    for (int i = 1; i <= heap->Size; i++){
+        printf("%d ", heap->Elements[i]);
     }
+    printf("\n");
 }
 
 int main(int argc, char const *argv[])
 {
-    MaxHeap heap = Create(1000); 
+    int MaxSize = 100;
+	MaxHeap H = Create(MaxSize);
+	Insert(H,10);
+	Insert(H,8);
+	Insert(H,9);
+	Insert(H,4);
+	Insert(H,6);
+    Insert(H,5);
+    Insert(H,3);
+    
+    LevelOrderTraversal(H);
+    printf("\n");
+	Remove(H);
+	LevelOrderTraversal(H);
 
     return 0;
 }
